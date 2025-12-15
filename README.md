@@ -1,4 +1,5 @@
 🌱 Lumino
+
 Learning That Adapts to You
 
 Lumino is an adaptive learning platform built for students, educators, and institutions.
