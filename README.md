@@ -1,73 +1,64 @@
-# Welcome to your Lovable project
+🌱 Lumino
 
-## Project info
+Learning That Adapts to You
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+Lumino is an adaptive learning platform built for students, educators, and institutions.
+It personalizes learning paths, focuses on mastery instead of completion, and provides real-time insights to improve learning outcomes.
 
-## How can I edit this code?
+With Lumino:
 
-There are several ways of editing your application.
+Students learn at their own pace
 
-**Use Lovable**
+Teachers teach within specific institutions and track real understanding
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+Institutions gain visibility into learning performance
 
-Changes made via Lovable will be committed automatically to this repo.
+🎯 Key Features
 
-**Use your preferred IDE**
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+👩‍🎓 For Students
 
-Follow these steps:
+Personalized learning paths
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+Mastery-based progression
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+Real-time feedback and progress tracking
 
-# Step 3: Install the necessary dependencies.
-npm i
+Improved focus and reduced burnout
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
-```
 
-**Edit a file directly in GitHub**
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+👨‍🏫 For Teachers
 
-**Use GitHub Codespaces**
+Teach within specific institutions
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Create and manage adaptive content
 
-## What technologies are used for this project?
+Track student mastery, not just task completion
 
-This project is built with:
+Actionable insights for better teaching
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
 
-## How can I deploy this project?
 
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
+🏫 For Institutions
 
-## Can I connect a custom domain to my Lovable project?
+Centralized learning management
 
-Yes, you can!
+Performance and engagement analytics
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+Scalable and secure learning environment
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Data-driven decision making
+
+
+👤 Creators
+
+Vyom Vyas
+🔗 LinkedIn:
+https://www.linkedin.com/in/vyom-vyas-757ba732b/
+
+
+🔗 Live Demo
+
+👉 https://friendly-cat-67b2ce.netlify.app
