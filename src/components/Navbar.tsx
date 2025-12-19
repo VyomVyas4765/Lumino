@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import LumioLogo from "./LumioLogo";
 
 const Navbar = () => {
@@ -8,11 +9,22 @@ const Navbar = () => {
         <LumioLogo />
         
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="lg" className="font-bold text-base px-6">
-            Login
+          <Button
+            asChild
+            variant="ghost"
+            size="lg"
+            className="font-bold text-base px-6"
+          >
+            <Link to="/login">Login</Link>
           </Button>
-          <Button variant="lumio-primary" size="lg" className="text-base px-8">
-            Sign Up
+
+          <Button
+            asChild
+            variant="lumio-primary"
+            size="lg"
+            className="text-base px-8"
+          >
+            <Link to="/signup">Sign Up</Link>
           </Button>
         </div>
       </div>
