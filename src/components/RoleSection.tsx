@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { GraduationCap, BookOpen, Building2, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface RoleCardProps {
   title: string;
@@ -39,16 +40,28 @@ const RoleCard = ({ title, description, icon, buttonText, variant, delay }: Role
       className={`group relative flex flex-col items-center rounded-3xl ${styles.bg} p-8 text-center transition-all duration-300 hover:-translate-y-2 hover:shadow-hover opacity-0 animate-fade-in-up`}
       style={{ animationDelay: delay }}
     >
-      <div className={`mb-6 flex h-16 w-16 items-center justify-center rounded-2xl ${styles.iconBg} shadow-card transition-transform duration-300 group-hover:scale-110`}>
+      <div
+        className={`mb-6 flex h-16 w-16 items-center justify-center rounded-2xl ${styles.iconBg} shadow-card transition-transform duration-300 group-hover:scale-110`}
+      >
         <div className={styles.iconColor}>{icon}</div>
       </div>
-      
+
       <h3 className="mb-3 text-2xl font-bold text-foreground">{title}</h3>
       <p className="mb-6 text-muted-foreground">{description}</p>
-      
-      <Button variant={styles.button} className="mt-auto gap-2">
-        {buttonText}
-        <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+
+      <Button asChild variant={styles.button} className="mt-auto gap-2">
+        <Link
+          to={
+            variant === "student"
+              ? "/student-signup"
+              : variant === "teacher"
+              ? "/teacher-signup"
+              : "/institution-signup"
+          }
+        >
+          {buttonText}
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+        </Link>
       </Button>
     </div>
   );
@@ -59,14 +72,20 @@ const RoleSection = () => {
     <section className="bg-card py-20 md:py-28">
       <div className="container mx-auto px-4 md:px-6">
         <div className="mb-16 text-center">
-          <h2 className="mb-4 text-3xl font-extrabold text-foreground md:text-4xl lg:text-5xl opacity-0 animate-fade-in" style={{ animationDelay: '0.1s' }}>
+          <h2
+            className="mb-4 text-3xl font-extrabold text-foreground md:text-4xl lg:text-5xl opacity-0 animate-fade-in"
+            style={{ animationDelay: "0.1s" }}
+          >
             Choose Your Path
           </h2>
-          <p className="mx-auto max-w-2xl text-lg text-muted-foreground opacity-0 animate-fade-in" style={{ animationDelay: '0.2s' }}>
+          <p
+            className="mx-auto max-w-2xl text-lg text-muted-foreground opacity-0 animate-fade-in"
+            style={{ animationDelay: "0.2s" }}
+          >
             Whether you're here to learn, teach, or manage—Lumio adapts to your needs.
           </p>
         </div>
-        
+
         <div className="grid gap-6 md:grid-cols-3 md:gap-8 lg:gap-10">
           <RoleCard
             title="I'm a Student"
@@ -76,6 +95,7 @@ const RoleSection = () => {
             variant="student"
             delay="0.3s"
           />
+
           <RoleCard
             title="I'm a Teacher"
             description="Teach independently or within institutions. Track learner progress and create engaging content."
@@ -84,6 +104,7 @@ const RoleSection = () => {
             variant="teacher"
             delay="0.4s"
           />
+
           <RoleCard
             title="Institution"
             description="Manage instructors, students, and learning spaces. Get insights and scale your programs."

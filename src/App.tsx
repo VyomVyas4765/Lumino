@@ -1,6 +1,8 @@
-import Signup from "./pages/Auth/Signup";
+import UnifiedSignup from "./pages/Auth/UnifiedSignup";
 import Login from "./pages/Auth/Login";
-
+import StudentSignUp from "./pages/Auth/StudentSignUp";
+import TeacherSignUp from "./pages/Auth/TeacherSignUp";
+import InstitutionSignup from "./pages/Auth/InstitutionSignUp";
 
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -20,10 +22,17 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          <Route path="/signup" element={<Signup />} />
+
+          {/* Unified Signup */}
+          <Route path="/signup" element={<UnifiedSignup />} />
+
+          {/* Legacy / role pages (still kept) */}
+          <Route path="/student-signup" element={<StudentSignUp />} />
+          <Route path="/teacher-signup" element={<TeacherSignUp />} />
+          <Route path="/institution-signup" element={<InstitutionSignup />} />
+
           <Route path="/login" element={<Login />} />
 
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
