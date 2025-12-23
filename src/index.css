@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800;900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Lumio - Friendly, approachable learning platform */
+    --background: 210 40% 98%;
+    --foreground: 222 47% 11%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+
+    /* Teal/Green - Trust, Growth, Learning */
+    --primary: 168 76% 42%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Warm Amber - Friendly accent */
+    --secondary: 43 96% 56%;
+    --secondary-foreground: 222 47% 11%;
+
+    /* Soft muted tones */
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+
+    /* Light teal accent */
+    --accent: 168 40% 94%;
+    --accent-foreground: 168 76% 32%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 168 76% 42%;
+
+    --radius: 1rem;
+
+    /* Custom Lumio tokens */
+    --lumio-teal: 168 76% 42%;
+    --lumio-teal-light: 168 40% 94%;
+    --lumio-teal-dark: 168 76% 32%;
+    --lumio-amber: 43 96% 56%;
+    --lumio-amber-light: 43 96% 92%;
+    --lumio-coral: 12 76% 61%;
+    --lumio-purple: 262 60% 58%;
+    --lumio-blue: 210 100% 56%;
+
+    /* Gradients */
+    --gradient-hero: linear-gradient(135deg, hsl(168 40% 94%) 0%, hsl(43 96% 96%) 100%);
+    --gradient-card-student: linear-gradient(135deg, hsl(168 76% 42%) 0%, hsl(168 76% 52%) 100%);
+    --gradient-card-teacher: linear-gradient(135deg, hsl(43 96% 56%) 0%, hsl(43 96% 66%) 100%);
+    --gradient-card-institution: linear-gradient(135deg, hsl(262 60% 58%) 0%, hsl(262 60% 68%) 100%);
+
+    /* Shadows */
+    --shadow-soft: 0 4px 20px -4px hsl(222 47% 11% / 0.08);
+    --shadow-card: 0 8px 30px -8px hsl(222 47% 11% / 0.12);
+    --shadow-hover: 0 12px 40px -12px hsl(222 47% 11% / 0.18);
+    --shadow-glow-teal: 0 8px 30px -8px hsl(168 76% 42% / 0.4);
+    --shadow-glow-amber: 0 8px 30px -8px hsl(43 96% 56% / 0.4);
+    --shadow-glow-purple: 0 8px 30px -8px hsl(262 60% 58% / 0.4);
+
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    --background: 222 47% 8%;
+    --foreground: 210 40% 98%;
+
+    --card: 222 47% 11%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222 47% 11%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 168 76% 50%;
+    --primary-foreground: 222 47% 11%;
+
+    --secondary: 43 96% 56%;
+    --secondary-foreground: 222 47% 11%;
+
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
+
+    --accent: 168 40% 20%;
+    --accent-foreground: 168 76% 70%;
+
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217 33% 17%;
+    --input: 217 33% 17%;
+    --ring: 168 76% 50%;
+
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+    font-family: 'Nunito', sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  .shadow-soft {
+    box-shadow: var(--shadow-soft);
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .shadow-hover {
+    box-shadow: var(--shadow-hover);
+  }
+
+  .shadow-glow-teal {
+    box-shadow: var(--shadow-glow-teal);
+  }
+
+  .shadow-glow-amber {
+    box-shadow: var(--shadow-glow-amber);
+  }
+
+  .shadow-glow-purple {
+    box-shadow: var(--shadow-glow-purple);
+  }
+
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  .gradient-card-student {
+    background: var(--gradient-card-student);
+  }
+
+  .gradient-card-teacher {
+    background: var(--gradient-card-teacher);
+  }
+
+  .gradient-card-institution {
+    background: var(--gradient-card-institution);
+  }
+
+  @keyframes gradient-shift {
+    0%, 100% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+  }
+
+  @keyframes fade-in-up {
+    0% {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in-up {
+    animation: fade-in-up 0.6s ease-out forwards;
+  }
+}
