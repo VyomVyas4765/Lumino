@@ -52,12 +52,11 @@ Scalable and secure learning environment
 Data-driven decision making
 
 
-👤 Creators
+👤 Creator
 
 Vyom Vyas
 🔗 LinkedIn:
-https://www.linkedin.com/in/vyom-vyas-757ba732b/
-
+https://www.linkedin.com/in/vyomvyas
 
 🔗 Live Demo
 
