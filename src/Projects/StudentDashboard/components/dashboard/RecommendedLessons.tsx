@@ -41,6 +41,15 @@ export function RecommendedLessons() {
           >
             {/* Thumbnail */}
             <div className="aspect-video bg-gradient-to-br from-muted to-card relative overflow-hidden">
+              {lesson.thumbnail ? (
+                <img
+                  src={lesson.thumbnail}
+                  alt={`${lesson.title} thumbnail`}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              ) : null}
+              <div className="absolute inset-0 bg-slate-950/35" />
+
               <div className="absolute inset-0 flex items-center justify-center">
                 <div className="w-12 h-12 rounded-full bg-background/80 backdrop-blur flex items-center justify-center group-hover:scale-110 group-hover:bg-primary transition-all duration-300">
                   <Play className="w-5 h-5 text-primary group-hover:text-primary-foreground ml-0.5" />

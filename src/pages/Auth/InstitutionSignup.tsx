@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { Link, useNavigate } from "react-router-dom";
+import { registerUser } from "@/lib/auth";
 
 import { Building2, ShieldCheck, MailCheck, ArrowLeft } from "lucide-react";
 import LumioLogo from "@/assets/Lumio,png-Picsart-BackgroundRemover.png";
@@ -19,11 +20,52 @@ import LumioLogo from "@/assets/Lumio,png-Picsart-BackgroundRemover.png";
 const InstitutionSignup = () => {
   const { toast } = useToast();
   const [agreed, setAgreed] = useState(false);
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    institutionName: "",
+    institutionType: "",
+    email: "",
+    country: "",
+    city: "",
+    verificationMethod: "",
+    password: "",
+    confirmPassword: "",
+  });
+
+  const setField = (field: keyof typeof formData, value: string) => {
+    setFormData((prev) => ({ ...prev, [field]: value }));
+  };
 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (
+      !formData.institutionName ||
+      !formData.institutionType ||
+      !formData.email ||
+      !formData.country ||
+      !formData.city ||
+      !formData.verificationMethod ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
+      toast({
+        title: "Missing fields",
+        description: "Please fill in all fields to continue.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      toast({
+        title: "Passwords don't match",
+        description: "Please make sure your passwords match.",
+        variant: "destructive",
+      });
+      return;
+    }
 
     if (!agreed) {
       toast({
@@ -34,11 +76,28 @@ const InstitutionSignup = () => {
       return;
     }
 
-    toast({
-      title: "Verification Request Submitted",
-      description:
-        "Our team will review your institution details and get back to you soon.",
+    const result = registerUser({
+      name: formData.institutionName,
+      email: formData.email,
+      password: formData.password,
+      role: "institution",
     });
+
+    if (!result.ok) {
+      toast({
+        title: "Signup failed",
+        description: result.message,
+        variant: "destructive",
+      });
+      return;
+    }
+
+    toast({
+      title: "Account created!",
+      description: "Institution account created. You can now log in.",
+    });
+
+    navigate("/login");
   };
 
   return (
@@ -121,12 +180,16 @@ const InstitutionSignup = () => {
 
             <div className="opacity-0 animate-fade-in-up" style={{ animationDelay: "0.1s" }}>
               <Label className="text-foreground font-medium">Institution Name</Label>
-              <Input placeholder="ABC Public School" />
+              <Input
+                placeholder="ABC Public School"
+                value={formData.institutionName}
+                onChange={(e) => setField("institutionName", e.target.value)}
+              />
             </div>
 
             <div className="opacity-0 animate-fade-in-up" style={{ animationDelay: "0.15s" }}>
               <Label className="text-foreground font-medium">Institution Type</Label>
-              <Select>
+              <Select onValueChange={(value) => setField("institutionType", value)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select type" />
                 </SelectTrigger>
@@ -141,23 +204,36 @@ const InstitutionSignup = () => {
 
             <div className="opacity-0 animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
               <Label className="text-foreground font-medium">Official Institution Email</Label>
-              <Input type="email" placeholder="admin@institution.edu" />
+              <Input
+                type="email"
+                placeholder="admin@institution.edu"
+                value={formData.email}
+                onChange={(e) => setField("email", e.target.value)}
+              />
             </div>
 
             <div className="grid grid-cols-2 gap-4 opacity-0 animate-fade-in-up" style={{ animationDelay: "0.25s" }}>
               <div>
                 <Label className="text-foreground font-medium">Country</Label>
-                <Input placeholder="India" />
+                <Input
+                  placeholder="India"
+                  value={formData.country}
+                  onChange={(e) => setField("country", e.target.value)}
+                />
               </div>
               <div>
                 <Label className="text-foreground font-medium">City</Label>
-                <Input placeholder="Mumbai" />
+                <Input
+                  placeholder="Mumbai"
+                  value={formData.city}
+                  onChange={(e) => setField("city", e.target.value)}
+                />
               </div>
             </div>
 
             <div className="opacity-0 animate-fade-in-up" style={{ animationDelay: "0.3s" }}>
               <Label className="text-foreground font-medium">Verification Method</Label>
-              <Select>
+              <Select onValueChange={(value) => setField("verificationMethod", value)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select verification method" />
                 </SelectTrigger>
@@ -170,12 +246,22 @@ const InstitutionSignup = () => {
 
             <div className="opacity-0 animate-fade-in-up" style={{ animationDelay: "0.35s" }}>
               <Label className="text-foreground font-medium">Password</Label>
-              <Input type="password" placeholder="Create strong password" />
+              <Input
+                type="password"
+                placeholder="Create strong password"
+                value={formData.password}
+                onChange={(e) => setField("password", e.target.value)}
+              />
             </div>
 
             <div className="opacity-0 animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
               <Label className="text-foreground font-medium">Confirm Password</Label>
-              <Input type="password" placeholder="Confirm password" />
+              <Input
+                type="password"
+                placeholder="Confirm password"
+                value={formData.confirmPassword}
+                onChange={(e) => setField("confirmPassword", e.target.value)}
+              />
             </div>
 
             <div className="flex gap-3 opacity-0 animate-fade-in-up" style={{ animationDelay: "0.45s" }}>

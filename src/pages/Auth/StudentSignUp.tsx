@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, BookOpen, Users, Zap, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { Link, useNavigate } from "react-router-dom";
+import { registerUser, setSessionUser } from "@/lib/auth";
 
 import LumioLogo from "@/assets/Lumio,png-Picsart-BackgroundRemover.png";
 
@@ -66,10 +67,29 @@ const StudentSignUp = () => {
       return;
     }
 
+    const result = registerUser({
+      name: formData.fullName,
+      email: formData.email,
+      password: formData.password,
+      role: "student",
+    });
+
+    if (!result.ok) {
+      toast({
+        title: "Signup failed",
+        description: result.message,
+        variant: "destructive",
+      });
+      return;
+    }
+
     toast({
       title: "Account created!",
       description: "Welcome to Lumio! Your learning journey begins now.",
     });
+
+    setSessionUser(result.user);
+    navigate("/dashboard");
   };
 
   return (

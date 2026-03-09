@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
+import { Link, useSearchParams } from 'react-router-dom';
 import { Play, Clock, CheckCircle, Search } from 'lucide-react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useLearning } from '@/Projects/StudentDashboard/contexts/LearningContext';
 import { Input } from '@/Projects/StudentDashboard/components/ui/input';
@@ -11,8 +11,22 @@ const categories = ['All', 'AI & ML', 'Programming', 'Web Development', 'Data Sc
 
 export default function Lessons() {
   const { lessons } = useLearning();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeCategory, setActiveCategory] = useState('All');
+  const [activeCategory, setActiveCategory] = useState(
+    categories.includes(searchParams.get('category') || '')
+      ? (searchParams.get('category') as string)
+      : 'All'
+  );
+
+  useEffect(() => {
+    const categoryFromUrl = searchParams.get('category');
+    if (categoryFromUrl && categories.includes(categoryFromUrl)) {
+      setActiveCategory(categoryFromUrl);
+      return;
+    }
+    setActiveCategory('All');
+  }, [searchParams]);
 
   const filteredLessons = lessons.filter(lesson => {
     const matchesSearch =
@@ -54,12 +68,27 @@ export default function Lessons() {
         </div>
 
         <div className="flex gap-2 overflow-x-auto">
-          {categories.map(category => (
+          {categories.map((category) => (
             <Button
               key={category}
               size="sm"
               variant={activeCategory === category ? 'default' : 'outline'}
-              onClick={() => setActiveCategory(category)}
+              onClick={() => {
+                setActiveCategory(category);
+                if (category === 'All') {
+                  setSearchParams((prev) => {
+                    const next = new URLSearchParams(prev);
+                    next.delete('category');
+                    return next;
+                  });
+                } else {
+                  setSearchParams((prev) => {
+                    const next = new URLSearchParams(prev);
+                    next.set('category', category);
+                    return next;
+                  });
+                }
+              }}
               className={cn(
                 'shrink-0',
                 activeCategory === category && 'bg-gradient-primary'
@@ -85,6 +114,15 @@ export default function Lessons() {
           >
             {/* Thumbnail */}
             <div className="aspect-video bg-gradient-to-br from-muted to-card relative overflow-hidden">
+              {lesson.thumbnail ? (
+                <img
+                  src={lesson.thumbnail}
+                  alt={`${lesson.title} thumbnail`}
+                  className="absolute inset-0 h-full w-full object-cover"
+                />
+              ) : null}
+              <div className="absolute inset-0 bg-slate-950/35" />
+
               <div className="absolute inset-0 flex items-center justify-center">
                 <div
                   className={cn(

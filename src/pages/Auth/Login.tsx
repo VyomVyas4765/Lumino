@@ -2,21 +2,35 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import lumioLogo from "@/assets/Lumio,png-Picsart-BackgroundRemover.png";
 import { ArrowLeft } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { authenticateUser, setSessionUser } from "@/lib/auth";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const { toast } = useToast();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    // TEMP mock auth success
-    const isAuthenticated = email.length > 0 && password.length > 0;
-
-    if (isAuthenticated) {
-      navigate("/dashboard");
+    const user = authenticateUser(email, password);
+    if (!user) {
+      toast({
+        title: "Login failed",
+        description: "Invalid email or password. Please sign up first.",
+        variant: "destructive",
+      });
+      return;
     }
+
+    setSessionUser(user);
+    if (user.role === "teacher") {
+      navigate("/teacher-dashboard");
+      return;
+    }
+
+    navigate("/dashboard");
   };
 
   return (

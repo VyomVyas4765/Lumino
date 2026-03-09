@@ -3,20 +3,21 @@ import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'rec
 import { TeacherNotes } from './TeacherNotes';
 import { QuizSection } from './QuizSection';
 
-const weeklyData = [
-  { day: 'Mon', xp: 120, lessons: 2 },
-  { day: 'Tue', xp: 80, lessons: 1 },
-  { day: 'Wed', xp: 200, lessons: 3 },
-  { day: 'Thu', xp: 150, lessons: 2 },
-  { day: 'Fri', xp: 280, lessons: 4 },
-  { day: 'Sat', xp: 100, lessons: 1 },
-  { day: 'Sun', xp: 180, lessons: 2 },
-];
-
 export function ProgressCharts() {
-  const { userProgress } = useLearning();
+  const { userProgress, weeklyActivity } = useLearning();
   
-  const completionPercent = Math.round((userProgress.lessonsCompleted / userProgress.totalLessons) * 100);
+  const completionPercent = userProgress.totalLessons
+    ? Math.round((userProgress.lessonsCompleted / userProgress.totalLessons) * 100)
+    : 0;
+
+  const chartData = weeklyActivity.map((entry) => ({
+    day: new Date(`${entry.date}T00:00:00`).toLocaleDateString('en-US', { weekday: 'short' }),
+    xp: entry.xp,
+    lessons: entry.lessons,
+  }));
+
+  const weeklyXp = chartData.reduce((sum, day) => sum + day.xp, 0);
+  const weeklyLessons = chartData.reduce((sum, day) => sum + day.lessons, 0);
 
   return (
     <section className="space-y-4 animate-slide-up stagger-2">
@@ -28,17 +29,17 @@ export function ProgressCharts() {
           <div className="flex items-center justify-between mb-6">
             <div>
               <h3 className="font-semibold">Weekly Progress</h3>
-              <p className="text-sm text-muted-foreground">XP earned this week</p>
+              <p className="text-sm text-muted-foreground">Live XP earned this week</p>
             </div>
             <div className="text-right">
-              <p className="text-2xl font-bold gradient-text">1,110</p>
-              <p className="text-xs text-success">+15% from last week</p>
+              <p className="text-2xl font-bold gradient-text">{weeklyXp.toLocaleString()}</p>
+              <p className="text-xs text-success">{weeklyLessons} lesson{weeklyLessons === 1 ? '' : 's'} completed</p>
             </div>
           </div>
           
           <div className="h-48">
             <ResponsiveContainer width="100%" height="100%">
-              <AreaChart data={weeklyData}>
+              <AreaChart data={chartData}>
                 <defs>
                   <linearGradient id="xpGradient" x1="0" y1="0" x2="0" y2="1">
                     <stop offset="5%" stopColor="hsl(175 84% 50%)" stopOpacity={0.4} />

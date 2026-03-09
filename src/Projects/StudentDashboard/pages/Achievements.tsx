@@ -3,7 +3,6 @@ import { Trophy, Lock, Sparkles } from 'lucide-react';
 import { useLearning } from '../contexts/LearningContext';
 import { cn } from '../lib/utils';
 
-
 const rarityStyles = {
   common: {
     bg: 'bg-muted',
@@ -34,12 +33,11 @@ const rarityStyles = {
 export default function Achievements() {
   const { achievements, badges, userProgress } = useLearning();
 
-  const unlockedAchievements = achievements.filter(a => a.isUnlocked);
-  const lockedAchievements = achievements.filter(a => !a.isUnlocked);
+  const unlockedAchievements = achievements.filter((a) => a.isUnlocked);
+  const lockedAchievements = achievements.filter((a) => !a.isUnlocked);
 
   return (
     <div className="max-w-5xl space-y-8 animate-fade-in">
-      {/* Header */}
       <header>
         <div className="flex items-center gap-3 mb-2">
           <Trophy className="w-8 h-8 text-xp" />
@@ -50,15 +48,21 @@ export default function Achievements() {
         </p>
       </header>
 
-      {/* Stats Overview */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <StatCard label="Achievements" value={`${unlockedAchievements.length}/${achievements.length}`} icon="🏆" />
-        <StatCard label="Badges Earned" value={`${badges.filter(b => b.isEarned).length}/${badges.length}`} icon="🎖️" />
-        <StatCard label="Total XP" value={userProgress.xp.toLocaleString()} icon="⚡" />
-        <StatCard label="Current Level" value={userProgress.level.toString()} icon="📊" />
+        <StatCard
+          label="Achievements"
+          value={`${unlockedAchievements.length}/${achievements.length}`}
+          icon={"\u{1F3C6}"}
+        />
+        <StatCard
+          label="Badges Earned"
+          value={`${badges.filter((b) => b.isEarned).length}/${badges.length}`}
+          icon={"\u{1F396}\u{FE0F}"}
+        />
+        <StatCard label="Total XP" value={userProgress.xp.toLocaleString()} icon={"\u{26A1}"} />
+        <StatCard label="Current Level" value={userProgress.level.toString()} icon={"\u{1F4CA}"} />
       </div>
 
-      {/* Badges Section */}
       <section className="space-y-4">
         <h2 className="text-xl font-display font-semibold flex items-center gap-2">
           <Sparkles className="w-5 h-5 text-accent" />
@@ -69,22 +73,19 @@ export default function Achievements() {
             <div
               key={badge.id}
               className={cn(
-                "glass-card rounded-xl p-4 text-center transition-all duration-300",
-                badge.isEarned
-                  ? "hover:scale-105 hover:shadow-glow-achievement"
-                  : "opacity-50"
+                'glass-card rounded-xl p-4 text-center transition-all duration-300',
+                badge.isEarned ? 'hover:scale-105 hover:shadow-glow-achievement' : 'opacity-50'
               )}
             >
-              <div className={cn(
-                "w-16 h-16 rounded-2xl mx-auto mb-3 flex items-center justify-center text-3xl",
-                badge.isEarned ? "bg-gradient-achievement" : "bg-muted"
-              )}>
+              <div
+                className={cn(
+                  'w-16 h-16 rounded-2xl mx-auto mb-3 flex items-center justify-center text-3xl',
+                  badge.isEarned ? 'bg-gradient-achievement' : 'bg-muted'
+                )}
+              >
                 {badge.isEarned ? badge.icon : <Lock className="w-6 h-6 text-muted-foreground" />}
               </div>
-              <p className={cn(
-                "font-semibold text-sm",
-                !badge.isEarned && "text-muted-foreground"
-              )}>
+              <p className={cn('font-semibold text-sm', !badge.isEarned && 'text-muted-foreground')}>
                 {badge.title}
               </p>
             </div>
@@ -92,7 +93,6 @@ export default function Achievements() {
         </div>
       </section>
 
-      {/* Unlocked Achievements */}
       {unlockedAchievements.length > 0 && (
         <section className="space-y-4">
           <h2 className="text-xl font-display font-semibold">Unlocked</h2>
@@ -103,26 +103,30 @@ export default function Achievements() {
                 <div
                   key={achievement.id}
                   className={cn(
-                    "glass-card rounded-xl p-5 border-2 transition-all duration-300 hover:scale-[1.02]",
+                    'glass-card rounded-xl p-5 border-2 transition-all duration-300 hover:scale-[1.02]',
                     styles.border,
                     styles.glow
                   )}
                 >
                   <div className="flex items-start gap-4">
-                    <div className={cn(
-                      "w-14 h-14 rounded-xl flex items-center justify-center text-2xl shrink-0",
-                      styles.bg
-                    )}>
+                    <div
+                      className={cn(
+                        'w-14 h-14 rounded-xl flex items-center justify-center text-2xl shrink-0',
+                        styles.bg
+                      )}
+                    >
                       {achievement.icon}
                     </div>
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
                         <h3 className="font-semibold">{achievement.title}</h3>
-                        <span className={cn(
-                          "px-2 py-0.5 rounded-full text-xs font-medium capitalize",
-                          styles.bg,
-                          styles.text
-                        )}>
+                        <span
+                          className={cn(
+                            'px-2 py-0.5 rounded-full text-xs font-medium capitalize',
+                            styles.bg,
+                            styles.text
+                          )}
+                        >
                           {achievement.rarity}
                         </span>
                       </div>
@@ -141,7 +145,6 @@ export default function Achievements() {
         </section>
       )}
 
-      {/* Locked Achievements */}
       {lockedAchievements.length > 0 && (
         <section className="space-y-4">
           <h2 className="text-xl font-display font-semibold flex items-center gap-2">
@@ -152,10 +155,7 @@ export default function Achievements() {
             {lockedAchievements.map((achievement) => {
               const styles = rarityStyles[achievement.rarity];
               return (
-                <div
-                  key={achievement.id}
-                  className="glass-card rounded-xl p-5 border border-border opacity-60"
-                >
+                <div key={achievement.id} className="glass-card rounded-xl p-5 border border-border opacity-60">
                   <div className="flex items-start gap-4">
                     <div className="w-14 h-14 rounded-xl bg-muted flex items-center justify-center shrink-0">
                       <Lock className="w-6 h-6 text-muted-foreground" />
@@ -163,10 +163,12 @@ export default function Achievements() {
                     <div className="flex-1">
                       <div className="flex items-center gap-2 mb-1">
                         <h3 className="font-semibold">{achievement.title}</h3>
-                        <span className={cn(
-                          "px-2 py-0.5 rounded-full text-xs font-medium capitalize bg-muted",
-                          styles.text
-                        )}>
+                        <span
+                          className={cn(
+                            'px-2 py-0.5 rounded-full text-xs font-medium capitalize bg-muted',
+                            styles.text
+                          )}
+                        >
                           {achievement.rarity}
                         </span>
                       </div>
@@ -192,4 +194,3 @@ function StatCard({ label, value, icon }: { label: string; value: string; icon: 
     </div>
   );
 }
-

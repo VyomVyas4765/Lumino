@@ -171,6 +171,64 @@
     background: var(--gradient-card-institution);
   }
 
+  .hero-3d-stage {
+    perspective: 1200px;
+    perspective-origin: 50% 35%;
+  }
+
+  .hero-3d-copy {
+    transform-style: preserve-3d;
+    will-change: transform;
+    transform: translate3d(0, var(--hero-copy-y, 0px), var(--hero-copy-z, 0px)) rotateX(calc(var(--hero-tilt, 0deg) * 0.2));
+    transition: transform 120ms linear;
+  }
+
+  .hero-3d-media {
+    transform-style: preserve-3d;
+    will-change: transform;
+    transform: translate3d(0, var(--hero-media-y, 0px), var(--hero-media-z, 0px)) rotateX(var(--hero-tilt, 0deg)) rotateY(var(--hero-pan, 0deg)) scale(var(--hero-scale, 1));
+    transition: transform 120ms linear;
+  }
+
+  .hero-orb {
+    will-change: transform;
+    transition: transform 120ms linear;
+  }
+
+  .hero-orb-a {
+    transform: translate3d(0, calc(var(--hero-orb-shift, 0px) * -0.35), 30px);
+  }
+
+  .hero-orb-b {
+    transform: translate3d(0, calc(var(--hero-orb-shift, 0px) * 0.5), -20px);
+  }
+
+  .hero-scroll-indicator {
+    opacity: var(--hero-indicator-opacity, 1);
+    transition: opacity 120ms linear;
+  }
+
+  @media (max-width: 767px) {
+    .hero-3d-media {
+      transform: translate3d(0, calc(var(--hero-media-y, 0px) * 0.45), calc(var(--hero-media-z, 0px) * 0.35)) rotateX(calc(var(--hero-tilt, 0deg) * 0.55)) scale(var(--hero-scale, 1));
+    }
+
+    .hero-3d-copy {
+      transform: translate3d(0, calc(var(--hero-copy-y, 0px) * 0.5), calc(var(--hero-copy-z, 0px) * 0.35));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero-3d-copy,
+    .hero-3d-media,
+    .hero-orb,
+    .hero-scroll-indicator {
+      transform: none !important;
+      transition: none !important;
+      opacity: 1 !important;
+    }
+  }
+
   @keyframes gradient-shift {
     0%, 100% {
       background-position: 0% 50%;

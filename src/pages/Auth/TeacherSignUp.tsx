@@ -5,7 +5,8 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, Users, BookOpen, Sparkles, ArrowLeft } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
+import { registerUser, setSessionUser } from "@/lib/auth";
 
 import LumioLogo from "@/assets/Lumio,png-Picsart-BackgroundRemover.png";
 
@@ -24,7 +25,7 @@ const TeacherSignUp = () => {
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [e.target.name]: e.target.value,
     }));
@@ -60,16 +61,33 @@ const TeacherSignUp = () => {
       return;
     }
 
+    const result = registerUser({
+      name: formData.fullName,
+      email: formData.email,
+      password: formData.password,
+      role: "teacher",
+    });
+
+    if (!result.ok) {
+      toast({
+        title: "Signup failed",
+        description: result.message,
+        variant: "destructive",
+      });
+      return;
+    }
+
     toast({
       title: "Account created!",
-      description: "Welcome Teacher! Your journey with Lumio begins 🚀",
+      description: "Welcome Teacher! Your journey with Lumio begins.",
     });
+
+    setSessionUser(result.user);
+    navigate("/teacher-dashboard");
   };
 
   return (
     <div className="min-h-screen flex bg-gradient-to-br from-orange-200 via-amber-100 to-white dark:from-[#0f0a05] dark:via-[#120d08] dark:to-[#0a0907] relative">
-
-      {/* 🔙 BACK BUTTON */}
       <button
         onClick={() => navigate(-1)}
         className="absolute top-6 left-6 z-50 flex items-center gap-2 text-sm font-medium text-foreground/70 hover:text-foreground transition"
@@ -78,7 +96,6 @@ const TeacherSignUp = () => {
         Back
       </button>
 
-      {/* LEFT PANEL — 25% */}
       <div className="hidden lg:flex lg:w-[25%] relative overflow-hidden bg-gradient-to-b from-orange-700 via-orange-600 to-orange-500">
         <div className="absolute inset-0">
           <div className="absolute top-20 left-6 w-28 h-28 bg-white/25 rounded-full blur-2xl" />
@@ -92,9 +109,7 @@ const TeacherSignUp = () => {
               alt="Lumio Logo"
               className="w-16 h-16 rounded-2xl shadow-soft object-contain bg-white/30 backdrop-blur"
             />
-            <span className="text-4xl font-display font-bold">
-              Lumio
-            </span>
+            <span className="text-4xl font-display font-bold">Lumio</span>
           </Link>
 
           <h1 className="text-4xl xl:text-5xl font-display font-bold leading-tight mb-4">
@@ -103,9 +118,7 @@ const TeacherSignUp = () => {
             Inspire Minds
           </h1>
 
-          <p className="text-white/90 text-lg">
-            Teach smarter with Lumio’s intelligent educator tools.
-          </p>
+          <p className="text-white/90 text-lg">Teach smarter with Lumio's intelligent educator tools.</p>
 
           <div className="space-y-4 mt-8">
             <div className="flex items-center gap-4">
@@ -132,29 +145,19 @@ const TeacherSignUp = () => {
         </div>
       </div>
 
-      {/* RIGHT PANEL — 75% */}
       <div className="w-full lg:w-[75%] flex items-center justify-center p-8">
         <div className="w-full max-w-md">
-
-          {/* MOBILE LOGO */}
           <Link to="/" className="lg:hidden flex items-center gap-2 mb-8 cursor-pointer">
             <img src={LumioLogo} alt="Lumio Logo" className="w-12 h-12 rounded-xl object-contain" />
-            <span className="text-3xl font-display font-bold text-foreground">
-              Lumio
-            </span>
+            <span className="text-3xl font-display font-bold text-foreground">Lumio</span>
           </Link>
 
           <div className="mb-8">
-            <h2 className="text-3xl font-display font-bold text-foreground mb-2">
-              Create Teacher Account
-            </h2>
-            <p className="text-muted-foreground">
-              Join Lumio as an educator and start shaping futures
-            </p>
+            <h2 className="text-3xl font-display font-bold text-foreground mb-2">Create Teacher Account</h2>
+            <p className="text-muted-foreground">Join Lumio as an educator and start shaping futures</p>
           </div>
 
           <form onSubmit={handleSubmit} className="space-y-5">
-
             <div className="space-y-2">
               <Label className="text-foreground" htmlFor="fullName">Full Name</Label>
               <Input
